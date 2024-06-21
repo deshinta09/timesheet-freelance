@@ -13,11 +13,31 @@ module.exports = {
      * }], {});
     */
    await queryInterface.bulkInsert('Projects', [
-    { name: "Desain UI" },
-    { name: "Aplikasi Web" },
-    { name: "Asisten Virtual" },
-    { name: "Desain Logo" },
-    { name: "Aplikasi Timesheet" }
+    { 
+      name: "Desain UI", 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      name: "Aplikasi Web", 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      name: "Asisten Virtual", 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      name: "Desain Logo", 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      name: "Aplikasi Timesheet", 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    }
    ], {})
   },
 

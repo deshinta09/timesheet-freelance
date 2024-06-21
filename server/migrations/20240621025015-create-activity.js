@@ -48,6 +48,11 @@ module.exports = {
         allowNull: false,
         notEmpty: true
       },
+      duration: {
+        type: Sequelize.TIME,
+        allowNull: false,
+        notEmpty: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
