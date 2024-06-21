@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Activity.init({
     tittle: {
       type: DataTypes.STRING,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "Tittle is require" },
         notNull: { msg: "Tittle is require" }
@@ -26,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     startDate: {
       type: DataTypes.DATE,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "Start Date is require" },
         notNull: { msg: "Start Date is require" }
@@ -33,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     endDate: {
       type: DataTypes.DATE,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "End Date is require" },
         notNull: { msg: "End Date is require" }
@@ -40,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     startTime: {
       type: DataTypes.TIME,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "End Time is require" },
         notNull: { msg: "End Time is require" }
@@ -47,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     endTime: {
       type: DataTypes.TIME,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "End Time is require" },
         notNull: { msg: "End Time is require" }

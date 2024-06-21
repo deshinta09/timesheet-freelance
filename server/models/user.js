@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     username: {
       type: DataTypes.STRING,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "Username is require" },
         notNull: { msg: "Username is require" }
@@ -25,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       unique: { args: true, msg: "Email must be unique"},
+      allowNull:false,
       validate: {
         notEmpty: { msg: "Email is require" },
         notNull: { msg: "Email is require" },
@@ -33,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "Password is require" },
         notNull: { msg: "Password is require" }
@@ -40,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     rate: {
       type: DataTypes.INTEGER,
+      allowNull:false,
       validate: {
         notEmpty: { msg: "Rate is require" },
         notNull: { msg: "Rate is require" }
