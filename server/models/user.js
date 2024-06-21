@@ -11,14 +11,40 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Activity, { foreignKey: "UserId" })
     }
   }
   User.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    rate: DataTypes.INTEGER
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: "Username is require" },
+        notNull: { msg: "Username is require" }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: { args: true, msg: "Email must be unique"},
+      validate: {
+        notEmpty: { msg: "Email is require" },
+        notNull: { msg: "Email is require" },
+        isEmail: { msg: "Email must be type email" }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: { msg: "Password is require" },
+        notNull: { msg: "Password is require" }
+      }
+    },
+    rate: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: { msg: "Rate is require" },
+        notNull: { msg: "Rate is require" }
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',
