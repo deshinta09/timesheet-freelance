@@ -45,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TIME,
       allowNull:false,
       validate: {
-        notEmpty: { msg: "End Time is require" },
-        notNull: { msg: "End Time is require" }
+        notEmpty: { msg: "Start Time is require" },
+        notNull: { msg: "Start Time is require" }
       }
     },
     endTime: {
