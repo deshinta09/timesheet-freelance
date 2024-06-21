@@ -16,7 +16,8 @@ async function authentication(req,res,next) {
 
         let userLogin = await User.findByPk(token.id)
         req.user = {
-            id: userLogin.id
+            id: userLogin.id,
+            username: userLogin.username
         }
         next()
     } catch (error) {

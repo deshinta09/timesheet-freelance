@@ -1,4 +1,5 @@
-const { Activity } = require("../models/")
+const formatTime = require("../helpers/duration")
+const { Activity, Project } = require("../models/")
 
 class ControllerActivity {
     static async allActivity (req,res,next){
@@ -6,6 +7,9 @@ class ControllerActivity {
             let activities = await Activity.findAll({
                 where: {
                     UserId: req.user.id
+                },
+                include: {
+                    model: Project
                 }
             })
             res.status(200).json(activities)
@@ -18,7 +22,7 @@ class ControllerActivity {
         try {
             let { tittle, ProjectId, startDate, endDate, startTime, endTime } = req.body
 
-            let newActivity = await Activity.create({ tittle, ProjectId, UserId: req.user.id, startDate, endDate, startTime, endTime, duration: startTime-endTime })
+            let newActivity = await Activity.create({ tittle, ProjectId: Number(ProjectId), UserId: req.user.id, startDate, endDate, startTime, endTime, duration: formatTime(startTime,endTime) })
 
             res.status(200).json(newActivity)
         } catch (error) {
