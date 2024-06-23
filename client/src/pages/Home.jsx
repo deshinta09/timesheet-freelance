@@ -1,7 +1,10 @@
 export default function Home(){
     return (
         <>
-        <h1 className="font-bold text-center text-2xl">Home Page</h1>
+        <div className="m-5 bg-white">
+            <h1 className="font-bold text-center text-2xl">Table</h1>
+
+        </div>
         </>
     )
 }

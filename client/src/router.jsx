@@ -11,7 +11,7 @@ const router = createBrowserRouter([
         element: <Navbar/>,
         loader: ()=> {
             if (!localStorage.access_token) {
-                return redirect('/login')
+                // return redirect('/login')
             }
             return null
         },
