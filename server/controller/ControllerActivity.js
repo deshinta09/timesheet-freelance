@@ -1,10 +1,12 @@
+const { Op } = require("sequelize")
 const formatTime = require("../helpers/duration")
 const { Activity, Project, User } = require("../models/")
 
 class ControllerActivity {
     static async allActivity (req,res,next){
         try {
-            let activities = await Activity.findAll({
+            let { search } = req.query
+            let option = {
                 where: {
                     UserId: req.user.id
                 },
@@ -18,7 +20,9 @@ class ControllerActivity {
                         attributes:['username', 'rate']
                     }
                 ]
-            })
+            }
+            search ? option.where.tittle = { [Op.iLike]: `%${search}%` } : ''
+            let activities = await Activity.findAll(option)
             res.status(200).json(activities)
         } catch (error) {
             next(error)
