@@ -7,6 +7,7 @@ List of available endpoints:
 
 - `POST /user/register`
 - `POST /user/login`
+- `GET /user`
 - `GET /activity`
 - `POST /activity`
 - `GET /activity/:id`
@@ -56,32 +57,19 @@ OR
 ```
 &nbsp;
 
-## 2. LOGIN /user/login
+## 2. POST /user/login
+
+## 3. GET /user
 Description:
-- Post login from database
+- Get user from database
 
-- body
+_Response (200 - OK)_
 ```json
 {
-  "email": "string",
-  "password": "string"
-}
-```
-
-_Response (201 - OK)_
-```json
-{
-  "access_token": "string"
-}
-```
-_Response (400 - Bad Request)_
-```json
-{
-  "message": "Email must be type email"
-}
-OR
-{
-  "message": "Password is require"
+  "username": "string",
+  "rate": "integer",
+  "duration": "time",
+  "income": "integer"
 }
 ```
 _Response (401 - Unauthorized)_
@@ -92,7 +80,7 @@ _Response (401 - Unauthorized)_
 ```
 &nbsp;
 
-## 3. GET /activity
+## 4. GET /activity
 Description:
 - Get all activities from database
 
@@ -125,7 +113,7 @@ _Response (200 - OK)_
 &nbsp;
 
 
-## 4. POST /activity
+## 5. POST /activity
 Description:
 - Post activity from database
 
@@ -196,7 +184,7 @@ OR
 
 &nbsp;
 
-## 5. GET /activity/:id
+## 6. GET /activity/:id
 Description:
 - Get activity by id from database
 
@@ -242,7 +230,7 @@ _Response (404 - Not Found)_
 &nbsp;
 
 
-## 6. PUT /activity/:id
+## 7. PUT /activity/:id
 Description:
 - Put activity by id from database
 
@@ -329,7 +317,7 @@ _Response (404 - Not Found)_
 &nbsp;
 
 
-## 7. DELETE /activity/:id
+## 8. DELETE /activity/:id
 Description:
 - Delete activity by id from database
 
