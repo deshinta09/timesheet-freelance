@@ -8,7 +8,7 @@ export default function AddEdit({ page }) {
     const { id } = useParams()
     const [projects,setProjects] = useState([])
     const [input,setInput] = useState({
-        tittle: '', ProjectId: 0, startDate: '', endDate: '', startTime: '', endTime: ''
+        tittle: '', ProjectId: 1, startDate: '', endDate: '', startTime: '', endTime: ''
     })
 
     async function allProjects() { // ambil semua project dari db
@@ -138,7 +138,7 @@ export default function AddEdit({ page }) {
                         {
                             projects.map(el=>(
                                 input.ProjectId === el.id ? 
-                                <option value={input.ProjectId} selected>{el.name}</option> :
+                                <option value={el.id} selected>{el.name}</option> :
                                 <option key={el.id} value={el.id}>{el.name}</option> 
                             ))
                         }

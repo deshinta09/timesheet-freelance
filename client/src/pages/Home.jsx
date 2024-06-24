@@ -83,6 +83,13 @@ export default function Home(){
         }
     }
 
+    const rupiah = (number)=>{
+        return new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR"
+        }).format(number);
+    }
+
     useEffect(()=>{
         allActivities()
     },[search])
@@ -102,7 +109,7 @@ export default function Home(){
                     </div>
                     <div>
                         <h1 className="text-sm">Rate</h1>
-                        <h3 className="text-base">Rp {profile.rate}/jam</h3>
+                        <h3 className="text-base">{rupiah(profile.rate)}/jam</h3>
                     </div>
                 </div>
                 <div>
@@ -161,7 +168,7 @@ export default function Home(){
                         </div>
                         <div className="flex justify-between font-bold">
                             <span>Total Pendapatan</span>
-                            <span>Rp {profile.income}</span>
+                            <span>{rupiah(profile.income)}</span>
                         </div>
                         <h1></h1>
                     </div>
