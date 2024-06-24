@@ -1,5 +1,5 @@
 const formatTime = require("../helpers/duration")
-const { Activity, Project } = require("../models/")
+const { Activity, Project, User } = require("../models/")
 
 class ControllerActivity {
     static async allActivity (req,res,next){
@@ -8,9 +8,16 @@ class ControllerActivity {
                 where: {
                     UserId: req.user.id
                 },
-                include: {
-                    model: Project
-                }
+                include: [
+                    {
+                        model: Project,
+                        attributes:['name']
+                    },
+                    {
+                        model: User,
+                        attributes:['username', 'rate']
+                    }
+                ]
             })
             res.status(200).json(activities)
         } catch (error) {
