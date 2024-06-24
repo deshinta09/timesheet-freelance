@@ -36,7 +36,11 @@ function formatTime(start,end) {
     minutes.toString().length === 1 ? minutes = `0${minutes}` : ''
     second.toString().length === 1 ? second = `0${second}` : ''
 
-    return `'${hours}:${minutes}:${second}'`
+    return {
+        duration:`'${hours}:${minutes}:${second}'`,
+        hours: Number(hours),
+        minutes: Number(minutes)
+    }
 }
 
 module.exports = formatTime

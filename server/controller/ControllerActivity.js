@@ -1,4 +1,4 @@
-const { Op } = require("sequelize")
+const { Op, where } = require("sequelize")
 const formatTime = require("../helpers/duration")
 const { Activity, Project, User } = require("../models/")
 
@@ -32,9 +32,25 @@ class ControllerActivity {
     static async addActivity (req,res,next){
         try {
             let { tittle, ProjectId, startDate, endDate, startTime, endTime } = req.body
-            console.log(req.body,'<< data yang dikirim');
+            console.log(req.body,formatTime(startTime,endTime).duration,'<<< data controller');
 
-            let newActivity = await Activity.create({ tittle, ProjectId: Number(ProjectId), UserId: req.user.id, startDate, endDate, startTime, endTime, duration: formatTime(startTime,endTime) })
+            let newActivity = await Activity.create({ tittle, ProjectId: Number(ProjectId), UserId: req.user.id, startDate, endDate, startTime, endTime, duration: formatTime(startTime,endTime).duration })
+
+            let lamaWaktu = formatTime(startTime,endTime) // waktu yang ditambah
+            let totalJam = Number(lamaWaktu.hours) + Number(req.user.duration[0]) // menjumlahkan jam yang ditambah dan yang sudah ada di database
+            console.log();
+            let totalMenit = Number(lamaWaktu.minutes) + Number(req.user.duration[1]) // menjumlahkan menit yang ditambah dan yang sudah ada di database
+            let totalDurasi = `${totalJam}:${totalMenit}` // total semua waktu dalam format jam
+            let income = totalJam * req.user.rate // jumlah income yang didapat
+
+            await User.update(
+                {
+                    duration:totalDurasi,income
+                },
+                {
+                    where: { id:req.user.id }
+                }
+            )
 
             res.status(200).json(newActivity)
         } catch (error) {

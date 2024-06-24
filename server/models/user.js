@@ -48,7 +48,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { msg: "Rate is require" },
         notNull: { msg: "Rate is require" }
       }
-    }
+    },
+    duration: DataTypes.TIME,
+    income: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

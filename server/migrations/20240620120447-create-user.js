@@ -31,6 +31,12 @@ module.exports = {
         allowNull: false,
         notEmpty: true
       },
+      duration: {
+        type: Sequelize.TIME
+      },
+      income: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

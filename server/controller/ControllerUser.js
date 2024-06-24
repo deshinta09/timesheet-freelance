@@ -6,7 +6,7 @@ class ControllerUser {
     static async register (req,res,next){
         try {
             let { username, email, password, rate } = req.body
-            let newUser = await User.create({ username, email, password, rate })
+            let newUser = await User.create({ username, email, password, rate, income: 0, duration: '00:00:00' })
             res.status(201).json({
                 id: newUser.id,
                 username: newUser.username,
@@ -46,7 +46,9 @@ class ControllerUser {
             }
             res.status(200).json({
                 username: user.username,
-                rate: user.rate
+                rate: user.rate,
+                duration: user.duration,
+                income: user.income
             })
         } catch (error) {
             next(error)

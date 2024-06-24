@@ -17,7 +17,10 @@ async function authentication(req,res,next) {
         let userLogin = await User.findByPk(token.id)
         req.user = {
             id: userLogin.id,
-            username: userLogin.username
+            username: userLogin.username,
+            rate: userLogin.rate,
+            income: Number(userLogin.income),
+            duration: userLogin.duration.split(':')
         }
         next()
     } catch (error) {
