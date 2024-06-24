@@ -51,7 +51,7 @@ Start client:
 npm run dev
 ```
 
-## Endpoint :
+## Endpoint Server :
 List of available endpoints:
 
 - `POST /user/register`
