@@ -6,6 +6,7 @@ Timesheet API Documentation
 - Install npm
 - Install node.js
 - Install javascript
+- postgressql
 
 
 ## Getting Started
