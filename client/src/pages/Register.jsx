@@ -25,7 +25,7 @@ export default function Register(){
                 </div>
 
                 <div className="flex justify-center mt-5">
-                    <button className="py-1 px-2 rounded bg-[#2775EC] text-white">Login</button>
+                    <button className="py-1 px-2 rounded bg-[#2775EC] text-white hover:bg-[#1757b7]">Sign In</button>
                 </div>
             </form>
         </div>
