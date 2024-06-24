@@ -73,6 +73,7 @@ export default function Home(){
                 icon: "success"
             })
             allActivities()
+            getProfile()
         } catch (error) {
             Swal.fire({
                 title: "Oops...",
@@ -156,11 +157,11 @@ export default function Home(){
                     <div className="bg-[#F7F8FB] text-[#2775EC] p-3">
                         <div className="flex justify-between">
                             <h1>Total Durasi</h1>
-                            <h1>8 jam 50 menit</h1>
+                            <h1>{profile.duration}</h1>
                         </div>
                         <div className="flex justify-between font-bold">
                             <span>Total Pendapatan</span>
-                            <span>Rp 153.000</span>
+                            <span>Rp {profile.income}</span>
                         </div>
                         <h1></h1>
                     </div>

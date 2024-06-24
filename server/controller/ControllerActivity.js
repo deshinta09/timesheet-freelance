@@ -123,8 +123,6 @@ class ControllerActivity {
 
     static async deleteActivity(req,res,next){
         try {
-            console.log('masuk controller');
-            console.log(req.params,'<< id nya');
             let { id } = req.params
             let activity = await Activity.findByPk(id)
             if(!activity){
