@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
+import instance from "../config/instance"
+import { useEffect, useState } from "react"
 
 export default function Home(){
     const navigate = useNavigate()
+    const [activities,setActivities] = useState([])
+    const [search,setSearch] = useState('')
     
     function logOutHandler(e) {
         e.preventDefault()
@@ -14,6 +18,30 @@ export default function Home(){
             icon: "success"
         });
     }
+
+    async function allActivities() {
+        try {
+            let { data } = await instance({
+                method: 'get',
+                url: `/activities?search=${search}`,
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            })
+            setActivities(data)
+        } catch (error) {
+            Swal.fire({
+                title: "Oops...",
+                text: error.response.data.message,
+                icon: "success"
+            })
+        }
+    }
+
+    useEffect(()=>{
+        allActivities()
+    },[search])
+    console.log(activities,'<< data activity');
     return (
         <>
         <div className="m-5 bg-white rounded-lg">
@@ -39,10 +67,7 @@ export default function Home(){
                     <button className="py-1 px-2 rounded bg-[#F7F8FB] text-[#2775EC]">Tambah Kegiatan</button>
                 </div>
                 <div>
-                    <form action="">
-                        <input type="text" className="rounded py-1 px-2 border focus:outline-none focus:ring-1 ring-[#F7F8FB] mr-3" />
-                        <button type="submit" className="py-1 px-2 rounded bg-[#2775EC] text-white">cari</button>
-                    </form>
+                    <input type="text" placeholder="cari" className="rounded py-1 px-2 border focus:outline-none focus:ring-1 ring-[#F7F8FB] mr-3 placeholder:text-slate-400" onChange={(e)=>setSearch(e.target.value)}/>
                 </div>
             </div>
             <div className="px-5 pb-5">
@@ -61,32 +86,23 @@ export default function Home(){
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-[#F7F8FB]">
-                            <tr>
-                                <td>Pembuatan Website</td>
-                                <td>UI Desain</td>
-                                <td>2 Okt 2024</td>
-                                <td>3 Okt 2024</td>
-                                <td>09.00</td>
-                                <td>15.00</td>
-                                <td>06.00</td>
-                                <td>
-                                    <button>Edit</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Pembuatan Server</td>
-                                <td>UI Desain</td>
-                                <td>3 Okt 2024</td>
-                                <td>4 Okt 2024</td>
-                                <td>09.00</td>
-                                <td>15.00</td>
-                                <td>06.00</td>
-                                <td>
-                                    <button>Edit</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
+                            {
+                                activities.map(el=>(
+                                    <tr key={el.id}>
+                                        <td>{el.tittle}</td>
+                                        <td>{el?.Project?.name}</td>
+                                        <td>{el.startDate}</td>
+                                        <td>{el.endDate}</td>
+                                        <td>{el.startTime}</td>
+                                        <td>{el.endTime}</td>
+                                        <td>{el.duration}</td>
+                                        <td>
+                                            <button>Edit</button>
+                                            <button>Delete</button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
                         </tbody>
                     </table>
                     <div className="bg-[#F7F8FB] text-[#2775EC] p-3">

@@ -5,6 +5,6 @@ const routeActivity = require('./activity')
 const authentication = require('../middleware/authentication')
 
 route.use('/user', routeUser)
-route.use('/activity', authentication, routeActivity)
+route.use('/activities', authentication, routeActivity)
 
 module.exports = route
