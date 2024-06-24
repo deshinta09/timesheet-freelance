@@ -1,16 +1,35 @@
+import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2"
+
 export default function Home(){
+    const navigate = useNavigate()
+    
+    function logOutHandler(e) {
+        e.preventDefault()
+        localStorage.removeItem("access_token")
+        navigate("/login")
+        Swal.fire({
+            title: "Success",
+            text: "Success Logout!",
+            icon: "success"
+        });
+    }
     return (
         <>
         <div className="m-5 bg-white rounded-lg">
-            {/* <h1 className="font-bold text-center text-2xl">Table</h1> */}
-            <div className="flex p-5">
-                <div className="mr-16">
-                    <h1 className="text-sm">Nama Karyawan</h1>
-                    <h3 className="text-base">User 1</h3>
+            <div className="flex justify-between p-5">
+                <div className="flex">
+                    <div className="mr-16">
+                        <h1 className="text-sm">Nama Karyawan</h1>
+                        <h3 className="text-base">User 1</h3>
+                    </div>
+                    <div>
+                        <h1 className="text-sm">Rate</h1>
+                        <h3 className="text-base">Rp 12.000/jam</h3>
+                    </div>
                 </div>
                 <div>
-                    <h1 className="text-sm">Rate</h1>
-                    <h3 className="text-base">Rp 12.000/jam</h3>
+                    <button className="px-3 py-1 rounded border border-[#f15858] hover:bg-[#f15858] hover:text-white" onClick={logOutHandler}>Log out</button>
                 </div>
             </div>
             <hr />
