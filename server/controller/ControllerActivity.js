@@ -38,14 +38,14 @@ class ControllerActivity {
 
             let lamaWaktu = formatTime(startTime,endTime) // waktu yang ditambah
             let totalJam = Number(lamaWaktu.hours) + Number(req.user.duration[0]) // menjumlahkan jam yang ditambah dan yang sudah ada di database
-            console.log();
             let totalMenit = Number(lamaWaktu.minutes) + Number(req.user.duration[1]) // menjumlahkan menit yang ditambah dan yang sudah ada di database
             let totalDurasi = `${totalJam}:${totalMenit}` // total semua waktu dalam format jam
             let income = totalJam * req.user.rate // jumlah income yang didapat
 
             await User.update(
                 {
-                    duration:totalDurasi,income
+                    duration:totalDurasi,
+                    income
                 },
                 {
                     where: { id:req.user.id }
@@ -91,12 +91,30 @@ class ControllerActivity {
 
             await Activity.update(
                 { 
-                    tittle, ProjectId, startDate, endDate, startTime, endTime, duration: formatTime(startTime,endTime) 
+                    tittle, ProjectId, startDate, endDate, startTime, endTime, duration: formatTime(startTime,endTime).duration
                 }, 
                 { 
                     where: { id } 
                 }
             )
+
+            let waktuAwal = activity.duration.split(':')
+            let lamaWaktu = formatTime(startTime,endTime) // waktu yang ditambah
+            let totalJam = Number(lamaWaktu.hours) + (Number(req.user.duration[0]) - waktuAwal[0]) // menjumlahkan jam yang ditambah dan yang sudah ada di database
+            let totalMenit = Number(lamaWaktu.minutes) + (Number(req.user.duration[1]) - waktuAwal[1]) // menjumlahkan menit yang ditambah dan yang sudah ada di database
+            let totalDurasi = `${totalJam}:${totalMenit}` // total semua waktu dalam format jam
+            let income = totalJam * req.user.rate // jumlah income yang didapat
+
+            await User.update(
+                {
+                    duration:totalDurasi,
+                    income
+                },
+                {
+                    where: { id:req.user.id }
+                }
+            )
+
             res.status(200).json({ message: `Success Update ${tittle}`})
         } catch (error) {
             next(error)
@@ -105,6 +123,8 @@ class ControllerActivity {
 
     static async deleteActivity(req,res,next){
         try {
+            console.log('masuk controller');
+            console.log(req.params,'<< id nya');
             let { id } = req.params
             let activity = await Activity.findByPk(id)
             if(!activity){
@@ -112,6 +132,23 @@ class ControllerActivity {
             }
 
             await Activity.destroy({ where: { id } })
+
+            let waktuAwal = activity.duration.split(':')
+            let totalJam = Number(req.user.duration[0]) - waktuAwal[0] // menjumlahkan jam yang ditambah dan yang sudah ada di database
+            let totalMenit = Number(req.user.duration[1]) - waktuAwal[1] // menjumlahkan menit yang ditambah dan yang sudah ada di database
+            let totalDurasi = `${totalJam}:${totalMenit}` // total semua waktu dalam format jam
+            let income = totalJam * req.user.rate // jumlah income yang didapat
+
+            await User.update(
+                {
+                    duration:totalDurasi,
+                    income
+                },
+                {
+                    where: { id:req.user.id }
+                }
+            )
+
             res.status(200).json({ message: `Success Delete ${activity.tittle}`})
         } catch (error) {
             next(error)
