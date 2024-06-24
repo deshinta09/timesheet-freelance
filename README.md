@@ -4,6 +4,8 @@ Timesheet API Documentation
 
 ## Prerequisites
 - Install npm
+- Install node.js
+- Install javascript
 
 
 ## Getting Started
