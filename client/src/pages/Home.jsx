@@ -7,6 +7,7 @@ export default function Home(){
     const navigate = useNavigate()
     const [activities,setActivities] = useState([])
     const [search,setSearch] = useState('')
+    const [profile,setProfile] = useState({})
     
     function logOutHandler(e) {
         e.preventDefault()
@@ -38,10 +39,57 @@ export default function Home(){
         }
     }
 
+    async function getProfile(){
+        try {
+            let { data } = await instance({
+                method: 'get',
+                url: '/user',
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            })
+            setProfile(data)
+        } catch (error) {
+            Swal.fire({
+                title: "Oops...",
+                text: error.response.data.message,
+                icon: "error"
+            })
+        }
+    }
+
+    async function deleteActivity(id) {
+        try {
+            let { data } = await instance({
+                method: 'delete',
+                url: `/activities/${id}`,
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            })
+            Swal.fire({
+                title: "Success",
+                text: data.message,
+                icon: "success"
+            })
+            allActivities()
+        } catch (error) {
+            Swal.fire({
+                title: "Oops...",
+                text: error.response.data.message,
+                icon: "error"
+            })
+        }
+    }
+
     useEffect(()=>{
         allActivities()
     },[search])
-    console.log(activities,'<< data activity');
+    
+    useEffect(()=>{
+        getProfile()
+    },[])
+
     return (
         <>
         <div className="m-5 bg-white rounded-lg">
@@ -49,11 +97,11 @@ export default function Home(){
                 <div className="flex">
                     <div className="mr-16">
                         <h1 className="text-sm">Nama Karyawan</h1>
-                        <h3 className="text-base">User 1</h3>
+                        <h3 className="text-base">{profile.username}</h3>
                     </div>
                     <div>
                         <h1 className="text-sm">Rate</h1>
-                        <h3 className="text-base">Rp 12.000/jam</h3>
+                        <h3 className="text-base">Rp {profile.rate}/jam</h3>
                     </div>
                 </div>
                 <div>
@@ -64,7 +112,7 @@ export default function Home(){
             <div className="flex justify-between p-6 text-base">
                 <div className="flex gap-5 font-bold">
                     <h1>Daftar Kegiatan</h1>
-                    <button className="py-1 px-2 rounded bg-[#F7F8FB] text-[#2775EC]">Tambah Kegiatan</button>
+                    <button className="py-1 px-2 rounded bg-[#F7F8FB] text-[#2775EC]" onClick={()=>navigate('/add-activity')}>Tambah Kegiatan</button>
                 </div>
                 <div>
                     <input type="text" placeholder="cari" className="rounded py-1 px-2 border focus:outline-none focus:ring-1 ring-[#F7F8FB] mr-3 placeholder:text-slate-400" onChange={(e)=>setSearch(e.target.value)}/>
@@ -91,14 +139,14 @@ export default function Home(){
                                     <tr key={el.id}>
                                         <td>{el.tittle}</td>
                                         <td>{el?.Project?.name}</td>
-                                        <td>{el.startDate}</td>
-                                        <td>{el.endDate}</td>
+                                        <td>{el.startDate.split('T')[0]}</td>
+                                        <td>{el.endDate.split('T')[0]}</td>
                                         <td>{el.startTime}</td>
                                         <td>{el.endTime}</td>
                                         <td>{el.duration}</td>
-                                        <td>
-                                            <button>Edit</button>
-                                            <button>Delete</button>
+                                        <td className="flex justify-center mt-5 gap-5 pl-0">
+                                            <button className="py-1 px-2 rounded border-2 border-[#F7F8FB]/120 hover:bg-[#2775EC] hover:text-white" onClick={()=>navigate(`/edit-activity/${el.id}`)}>Edit</button>
+                                            <button className="py-1 px-2 rounded border-2 border-[#f15858] hover:bg-[#f15858] hover:text-white" onClick={()=>deleteActivity(el.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 ))

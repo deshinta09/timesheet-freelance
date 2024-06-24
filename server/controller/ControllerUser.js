@@ -44,7 +44,10 @@ class ControllerUser {
             if(!user){
                 throw { name: "Not Found", message: "User not found"}
             }
-            res.status(200).json(user)
+            res.status(200).json({
+                username: user.username,
+                rate: user.rate
+            })
         } catch (error) {
             next(error)
         }

@@ -1,6 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+    const navigate = useNavigate()
 
     return <>
     <div className="py-3 pl-10 text-[#f15858] bg-white">
@@ -10,7 +11,7 @@ export default function Navbar() {
     <div className="bg-white mt-1">
             <h1 className="font-bold text-xl py-4 pl-7">HH Timesheet</h1>
             <div className="flex gap-5 text-base pl-12">
-                <div className="hover:text-[#2775EC] focus:text-[#2775EC] cursor-pointer active:ring ring-[#F0F6FF]">
+                <div className="hover:text-[#2775EC] focus:text-[#2775EC] cursor-pointer active:ring ring-[#F0F6FF]" onClick={()=>navigate('/')}>
                     <h1 className="mb-3">Daftar Kegiatan</h1>
                     <hr />
                 </div>

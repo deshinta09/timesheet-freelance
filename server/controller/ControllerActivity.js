@@ -32,6 +32,7 @@ class ControllerActivity {
     static async addActivity (req,res,next){
         try {
             let { tittle, ProjectId, startDate, endDate, startTime, endTime } = req.body
+            console.log(req.body,'<< data yang dikirim');
 
             let newActivity = await Activity.create({ tittle, ProjectId: Number(ProjectId), UserId: req.user.id, startDate, endDate, startTime, endTime, duration: formatTime(startTime,endTime) })
 

@@ -22,7 +22,11 @@ const router = createBrowserRouter([
             },
             {
                 path: 'add-activity',
-                element: <AddEdit/>
+                element: <AddEdit page="add"/>
+            },
+            {
+                path: 'edit-activity/:id',
+                element: <AddEdit page="edit"/>
             }
         ]
     },

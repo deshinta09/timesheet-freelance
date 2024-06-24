@@ -12,6 +12,9 @@ function errors(error,req,res,next) {
     } else if (error.name==="Not Found"){
         status = 404
         message = error.message
+    } else if(error.name==="SequelizeUniqueConstraintError"||error.name==="SequelizeValidationError"){
+        status = 400
+        message = error.errors[0].message
     }
 
     res.status(status).json({ message })
