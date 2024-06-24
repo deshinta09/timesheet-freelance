@@ -58,10 +58,52 @@ OR
 &nbsp;
 
 ## 2. POST /user/login
+Description:
+- Post login from database
+
+- body
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+_Response (201 - OK)_
+```json
+{
+  "access_token": "string"
+}
+```
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "Email must be type email"
+}
+OR
+{
+  "message": "Password is require"
+}
+```
+_Response (401 - Unauthorized)_
+```json
+{
+  "message": "Invalid email/password"
+}
+```
+&nbsp;
 
 ## 3. GET /user
 Description:
 - Get user from database
+
+Request:
+- headers: 
+```json
+{
+  "access_token": "string"
+}
+```
 
 _Response (200 - OK)_
 ```json
