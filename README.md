@@ -2,6 +2,52 @@
 
 Timesheet API Documentation
 
+## Prerequisites
+- Install npm
+
+
+## Getting Started
+
+Clone the repo: 
+```
+clone https://github.com/deshinta09/timesheet-freelance.git
+cd timesheet-freelance
+```
+
+Install dependencies client:
+```
+cd client/
+npm install
+```
+
+Install dependencies server:
+```
+cd server/
+npm install
+```
+
+Create Database With Postgres
+```
+cd server/
+npx sequelize db:create
+npx sequelize db:migrate
+npx sequelize db:seed:all
+```
+
+Start server:
+```
+node --watch app.js
+```
+OR
+```
+npx nodemon app.js
+```
+
+Start client:
+```
+npm run dev
+```
+
 ## Endpoint :
 List of available endpoints:
 
