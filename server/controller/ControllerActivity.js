@@ -5,7 +5,7 @@ const { Activity, Project, User } = require("../models/")
 class ControllerActivity {
     static async allActivity (req,res,next){
         try {
-            let { search } = req.query
+            let { search, filter } = req.query
             let option = {
                 where: {
                     UserId: req.user.id
@@ -21,6 +21,7 @@ class ControllerActivity {
                     }
                 ]
             }
+            filter ? option.where.ProjectId = { [Op.eq] : filter } : ''
             search ? option.where.tittle = { [Op.iLike]: `%${search}%` } : ''
             let activities = await Activity.findAll(option)
             res.status(200).json(activities)

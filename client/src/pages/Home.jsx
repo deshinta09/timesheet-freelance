@@ -6,8 +6,11 @@ import { useEffect, useState } from "react"
 export default function Home(){
     const navigate = useNavigate()
     const [activities,setActivities] = useState([])
-    const [search,setSearch] = useState('')
+    const [option,setOption] = useState({
+        search: '', filter: ''
+    })
     const [profile,setProfile] = useState({})
+    const [projectId,setProjectId] = useState([])
     
     function logOutHandler(e) {
         e.preventDefault()
@@ -24,7 +27,7 @@ export default function Home(){
         try {
             let { data } = await instance({
                 method: 'get',
-                url: `/activities?search=${search}`,
+                url: `/activities?search=${option.search}&filter=${option.filter}`,
                 headers: {
                     Authorization: `Bearer ${localStorage.access_token}`
                 }
@@ -49,6 +52,25 @@ export default function Home(){
                 }
             })
             setProfile(data)
+        } catch (error) {
+            Swal.fire({
+                title: "Oops...",
+                text: error.response.data.message,
+                icon: "error"
+            })
+        }
+    }
+
+    async function getProjects(){
+        try {
+            let { data } = await instance({
+                method: 'get',
+                url: '/projects',
+                headers: {
+                    Authorization: `Bearer ${localStorage.access_token}`
+                }
+            })
+            setProjectId(data)
         } catch (error) {
             Swal.fire({
                 title: "Oops...",
@@ -98,10 +120,11 @@ export default function Home(){
 
     useEffect(()=>{
         allActivities()
-    },[search])
+    },[option])
     
     useEffect(()=>{
         getProfile()
+        getProjects()
     },[])
 
     return (
@@ -129,7 +152,14 @@ export default function Home(){
                     <button className="py-1 px-2 rounded bg-[#F7F8FB] text-[#2775EC]" onClick={()=>navigate('/add-activity')}>Tambah Kegiatan</button>
                 </div>
                 <div>
-                    <input type="text" placeholder="cari" className="rounded py-1 px-2 border focus:outline-none focus:ring-1 ring-[#F7F8FB] mr-3 placeholder:text-slate-400" onChange={(e)=>setSearch(e.target.value)}/>
+                    <input type="text" placeholder="cari" className="rounded py-1 px-2 border focus:outline-none focus:ring-1 ring-[#F7F8FB] mr-3 placeholder:text-slate-400" onChange={(e)=>setOption({...option, search:e.target.value})}/>
+                    {/* <button className="py-2 px-1 text-[#f15858] hover:bg-[#f15858] hover:text-white">Filter</button> */}
+                    <select name="filter" id="filter" className="py-2 px-1 max-w-16 rounded" onChange={(e)=>setOption({...option,filter:e.target.value})}>
+                        <option value="" className="text-[#f15858]">Filter</option>
+                        {
+                            projectId.map(el=><option value={el.id} key={el.id}>{el.name}</option>)
+                        }
+                    </select>
                 </div>
             </div>
             <div className="px-5 pb-5">
