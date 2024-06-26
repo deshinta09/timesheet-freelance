@@ -90,6 +90,12 @@ export default function Home(){
         }).format(number);
     }
 
+    function formatTgl(tgl){
+        let month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'Desember']
+        tgl = tgl.split('-')
+        return `${tgl[2]} ${month[Number(tgl[1])]} ${tgl[0]}`
+    }
+
     useEffect(()=>{
         allActivities()
     },[search])
@@ -147,12 +153,12 @@ export default function Home(){
                                     <tr key={el.id}>
                                         <td>{el.tittle}</td>
                                         <td>{el?.Project?.name}</td>
-                                        <td>{el.startDate.split('T')[0]}</td>
-                                        <td>{el.endDate.split('T')[0]}</td>
+                                        <td>{formatTgl(el.startDate.split('T')[0])}</td>
+                                        <td>{formatTgl(el.endDate.split('T')[0])}</td>
                                         <td>{el.startTime}</td>
                                         <td>{el.endTime}</td>
                                         <td>{el.duration}</td>
-                                        <td className="flex justify-center mt-5 gap-5 pl-0">
+                                        <td className="flex justify-center mt-5 gap-3 pl-0">
                                             <button className="py-1 px-2 rounded border-2 border-[#F7F8FB]/120 hover:bg-[#2775EC] hover:text-white" onClick={()=>navigate(`/edit-activity/${el.id}`)}>Edit</button>
                                             <button className="py-1 px-2 rounded border-2 border-[#f15858] hover:bg-[#f15858] hover:text-white" onClick={()=>deleteActivity(el.id)}>Delete</button>
                                         </td>

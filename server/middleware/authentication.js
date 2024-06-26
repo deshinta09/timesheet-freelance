@@ -15,6 +15,10 @@ async function authentication(req,res,next) {
         }
 
         let userLogin = await User.findByPk(token.id)
+        if(!userLogin){
+            throw { name: "Unauthorized", message: "User not found. Please login first"}
+        }
+
         req.user = {
             id: userLogin.id,
             username: userLogin.username,
